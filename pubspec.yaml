@@ -28,11 +28,17 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  cupertino_icons: ^1.0.2
+  cached_network_image: ^3.2.3
+  carousel_slider: ^4.2.1
+  cupertino_icons: ^1.0.5
   flutter:
     sdk: flutter
+  geocoding: ^2.1.0
+  geolocator: ^9.0.2
   google_fonts: ^4.0.4
   http: ^0.13.6
+  image_cropper: ^4.0.1
+  image_picker: ^0.8.7+5
   intl: ^0.18.1
   shared_preferences: ^2.1.1
 

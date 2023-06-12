@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/user.dart';
 import 'main_screen.dart';
 import 'profile_screen.dart';
+import 'seller_screen.dart';
 
 class MenuWidget extends StatefulWidget {
   final User user;
@@ -64,6 +65,25 @@ class _MenuWidgetState extends State<MenuWidget> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => MainPage(
+                            user: widget.user,
+                          )));
+            },
+          ),
+          const Divider(
+            color: Colors.black54,
+            height: 2,
+          ),
+          ListTile(
+            title: const Text(
+              'Selling',
+              style: TextStyle(fontSize: 16),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SellerScreen(
                             user: widget.user,
                           )));
             },
