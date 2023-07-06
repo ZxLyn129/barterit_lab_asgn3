@@ -1,3 +1,4 @@
+import 'package:barterit_app/interfaces/login_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../models/user.dart';
@@ -79,13 +80,56 @@ class _MenuWidgetState extends State<MenuWidget> {
               style: TextStyle(fontSize: 16),
             ),
             onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SellerScreen(
-                            user: widget.user,
-                          )));
+              if (widget.user.name.toString() == 'guest') {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(15.0))),
+                      title: const Text(
+                        "Want to selling things?",
+                        style: TextStyle(),
+                      ),
+                      content: const Text(
+                          "Please login / register an account first",
+                          style: TextStyle()),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text(
+                            "Yes",
+                            style: TextStyle(),
+                          ),
+                          onPressed: () async {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (content) => const LoginScreen()));
+                          },
+                        ),
+                        TextButton(
+                          child: const Text(
+                            "No",
+                            style: TextStyle(),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } else {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SellerScreen(
+                              user: widget.user,
+                            )));
+              }
             },
           ),
           const Divider(

@@ -6,7 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 import '../config_server.dart';
+import '../models/user.dart';
 import 'login_screen.dart';
+import 'main_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -244,6 +246,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       )
                     ],
                   ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text(
+                        "Back Home?",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      GestureDetector(
+                        onTap: goHome,
+                        child: const Text(
+                          "  Click here",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue),
+                        ),
+                      )
+                    ],
+                  ),
                   const SizedBox(height: 10),
                 ],
               ),
@@ -311,7 +333,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           }).then((response) {
         var jsondata = jsonDecode(response.body);
         if (response.statusCode == 200 && jsondata['status'] == 'success') {
-          print(response.body);
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Registration Success")));
           Navigator.push(context,
@@ -378,5 +399,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       },
     );
+  }
+
+  void goHome() {
+    User user = User(
+        id: "0",
+        email: "guest@gmail.com",
+        name: "guest",
+        dateregister: '0',
+        otp: '0');
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (content) => MainPage(
+                  user: user,
+                )));
   }
 }

@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 
 import '../config_server.dart';
 import '../models/user.dart';
-import 'login_screen.dart';
 import 'main_screen.dart';
 
 class SplashPage extends StatefulWidget {
@@ -22,10 +21,6 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     checkNAutoLogin();
-    //Timer(
-    //const Duration(seconds: 3),
-    //() => Navigator.pushReplacement(context,
-    //MaterialPageRoute(builder: (content) => const LoginScreen())));
   }
 
   @override
@@ -87,31 +82,49 @@ class _SplashPageState extends State<SplashPage> {
                     MaterialPageRoute(
                         builder: (content) => MainPage(user: user))));
           } else {
+            User user = User(
+                id: "0",
+                email: "guest@gmail.com",
+                name: "guest",
+                dateregister: '0',
+                otp: '0');
             Timer(
                 const Duration(seconds: 3),
                 () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (content) => const LoginScreen())));
+                        builder: (content) => MainPage(user: user))));
           }
         } else {
+          User user = User(
+              id: "0",
+              email: "guest@gmail.com",
+              name: "guest",
+              dateregister: '0',
+              otp: '0');
           Timer(
               const Duration(seconds: 3),
               () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (content) => const LoginScreen())));
+                      builder: (content) => MainPage(user: user))));
         }
-      }).timeout(const Duration(seconds: 3), onTimeout: () {
+      }).timeout(const Duration(seconds: 5), onTimeout: () {
         if (!mounted) return;
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Time Out")));
       });
     } else {
+      User user = User(
+          id: "0",
+          email: "guest@gmail.com",
+          name: "guest",
+          dateregister: '0',
+          otp: '0');
       Timer(
           const Duration(seconds: 3),
           () => Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (content) => const LoginScreen())));
+              MaterialPageRoute(builder: (content) => MainPage(user: user))));
     }
   }
 }

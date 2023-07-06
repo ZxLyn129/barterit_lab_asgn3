@@ -27,8 +27,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _check = false;
 
-  User user =
-      User(id: "0", email: "na", name: "na", dateregister: '0', otp: '0');
+  User user = User(
+      id: "0",
+      email: "guest@gmail.com",
+      name: "guest",
+      dateregister: '0',
+      otp: '0');
 
   @override
   void initState() {
@@ -212,6 +216,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     )
                   ],
                 ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                      "Back Home?",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    GestureDetector(
+                      onTap: goHome,
+                      child: const Text(
+                        "  Click here",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue),
+                      ),
+                    )
+                  ],
+                ),
               ]),
             )));
   }
@@ -286,7 +310,6 @@ class _LoginScreenState extends State<LoginScreen> {
         if (response.statusCode == 200) {
           var jsondata = jsonDecode(response.body);
           if (jsondata['status'] == 'success') {
-            print(response.body);
             user = User.fromJson(jsondata['data']);
             showDialog(
               context: context,
@@ -310,10 +333,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 .showSnackBar(const SnackBar(content: Text("Login Failed")));
           }
         }
-      }).timeout(const Duration(seconds: 10), onTimeout: () {});
+      }).timeout(const Duration(seconds: 60), onTimeout: () {});
     } on TimeoutException catch (_) {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Time Out")));
     }
+  }
+
+  void goHome() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (content) => MainPage(
+                  user: user,
+                )));
   }
 }

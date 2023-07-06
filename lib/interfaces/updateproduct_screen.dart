@@ -52,7 +52,7 @@ class _UpdateDetailsScreenState extends State<UpdateDetailsScreen> {
   ];
 
   late double screenHeight, screenWidth, cardwitdh, resWidth;
-  List<File?> _image = [null, null, null];
+  final List<File?> _image = [null, null, null];
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -691,6 +691,10 @@ class _UpdateDetailsScreenState extends State<UpdateDetailsScreen> {
           return;
         }
       });
-    } catch (e) {}
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Update Failed")));
+      return;
+    }
   }
 }

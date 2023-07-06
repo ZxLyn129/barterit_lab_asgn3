@@ -5,7 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user.dart';
 import 'login_screen.dart';
+import 'main_screen.dart';
 import 'menu.dart';
+import 'register_screen.dart';
 import 'resetpass_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -66,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: Column(
                                   children: [
                                     Align(
-                                        alignment: Alignment.centerLeft,
+                                        alignment: Alignment.topLeft,
                                         child: SizedBox(
                                           height: 35,
                                           child: Text(
@@ -84,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ),
                                     ),
                                     Align(
-                                      alignment: Alignment.centerLeft,
+                                      alignment: Alignment.topLeft,
                                       child: SizedBox(
                                         height: 25,
                                         child: Row(
@@ -105,24 +107,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ),
                                     ),
                                     Align(
-                                      alignment: Alignment.centerLeft,
+                                      alignment: Alignment.topLeft,
                                       child: SizedBox(
                                         height: 25,
                                         child: Row(
                                           children: [
                                             const Icon(Icons.date_range),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      10, 0, 15, 0),
-                                              child: Text(
-                                                df.format(DateTime.parse(widget
-                                                    .user.dateregister
-                                                    .toString())),
-                                                style: const TextStyle(
-                                                    fontSize: 14),
-                                              ),
-                                            )
+                                            widget.user.dateregister
+                                                        .toString() ==
+                                                    ""
+                                                ? Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(10, 0, 15, 0),
+                                                    child: Text(
+                                                      df.format(DateTime.parse(
+                                                          widget
+                                                              .user.dateregister
+                                                              .toString())),
+                                                      style: const TextStyle(
+                                                          fontSize: 14),
+                                                    ),
+                                                  )
+                                                : Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(10, 0, 15, 0),
+                                                    child: Text(
+                                                      df.format(DateTime.now()),
+                                                      style: const TextStyle(
+                                                          fontSize: 14),
+                                                    ),
+                                                  ),
                                           ],
                                         ),
                                       ),
@@ -157,48 +171,88 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           Expanded(
-                              child: ListView(
-                            padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-                            shrinkWrap: true,
-                            children: [
-                              MaterialButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (content) =>
-                                              const ResetPassword()));
-                                },
-                                child: Text("Reset Password",
-                                    style: GoogleFonts.secularOne(
-                                      textStyle: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w200,
-                                          color:
-                                              Color.fromARGB(255, 2, 171, 149)),
+                              child: widget.user.email.toString() ==
+                                      'guest@gmail.com'
+                                  ? ListView(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 3, 10, 3),
+                                      shrinkWrap: true,
+                                      children: [
+                                        MaterialButton(
+                                          onPressed: _loginDialog,
+                                          child: Text("Login",
+                                              style: GoogleFonts.secularOne(
+                                                textStyle: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w200,
+                                                    color: Color.fromARGB(
+                                                        255, 2, 171, 149)),
+                                              )),
+                                        ),
+                                        const Divider(
+                                          color: Colors.black54,
+                                          height: 2,
+                                        ),
+                                        MaterialButton(
+                                          onPressed: _registerDialog,
+                                          child: Text("New Registration",
+                                              style: GoogleFonts.secularOne(
+                                                textStyle: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w200,
+                                                    color: Color.fromARGB(
+                                                        255, 2, 171, 149)),
+                                              )),
+                                        ),
+                                        const Divider(
+                                          color: Colors.black54,
+                                          height: 2,
+                                        ),
+                                      ],
+                                    )
+                                  : ListView(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 3, 10, 3),
+                                      shrinkWrap: true,
+                                      children: [
+                                        MaterialButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (content) =>
+                                                        const ResetPassword()));
+                                          },
+                                          child: Text("Reset Password",
+                                              style: GoogleFonts.secularOne(
+                                                textStyle: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w200,
+                                                    color: Color.fromARGB(
+                                                        255, 2, 171, 149)),
+                                              )),
+                                        ),
+                                        const Divider(
+                                          color: Colors.black54,
+                                          height: 2,
+                                        ),
+                                        MaterialButton(
+                                          onPressed: _logout,
+                                          child: Text("Logout",
+                                              style: GoogleFonts.secularOne(
+                                                textStyle: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w200,
+                                                    color: Color.fromARGB(
+                                                        255, 2, 171, 149)),
+                                              )),
+                                        ),
+                                        const Divider(
+                                          color: Colors.black54,
+                                          height: 2,
+                                        ),
+                                      ],
                                     )),
-                              ),
-                              const Divider(
-                                color: Colors.black54,
-                                height: 2,
-                              ),
-                              MaterialButton(
-                                onPressed: _logout,
-                                child: Text("Logout",
-                                    style: GoogleFonts.secularOne(
-                                      textStyle: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w200,
-                                          color:
-                                              Color.fromARGB(255, 2, 171, 149)),
-                                    )),
-                              ),
-                              const Divider(
-                                color: Colors.black54,
-                                height: 2,
-                              ),
-                            ],
-                          )),
                         ],
                       )),
                 ],
@@ -207,6 +261,86 @@ class _ProfileScreenState extends State<ProfileScreen> {
             drawer: MenuWidget(
               user: widget.user,
             )));
+  }
+
+  void _loginDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          title: const Text(
+            "Login",
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
+          content: const Text("Are you sure?"),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                "Yes",
+                style: TextStyle(),
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (content) => const LoginScreen()));
+              },
+            ),
+            TextButton(
+              child: const Text(
+                "No",
+                style: TextStyle(),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _registerDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15.0))),
+          title: const Text(
+            "New Account Registration",
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
+          content: const Text("Are you sure?"),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                "Yes",
+                style: TextStyle(),
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (content) => const RegisterScreen()));
+              },
+            ),
+            TextButton(
+              child: const Text(
+                "No",
+                style: TextStyle(),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _logout() {
@@ -232,12 +366,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 await prefs.setString('email', '');
                 await prefs.setString('pass', '');
                 await prefs.setBool('checkbox', false);
-
+                User user = User(
+                    id: "0",
+                    email: "guest@gmail.com",
+                    name: "guset",
+                    dateregister: '0',
+                    otp: '0');
                 if (!mounted) return;
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (content) => const LoginScreen()));
+                        builder: (content) => MainPage(user: user)));
               },
             ),
             TextButton(

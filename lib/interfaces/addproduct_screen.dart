@@ -45,7 +45,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     "Others",
   ];
 
-  List<File?> _image = [null, null, null];
+  final List<File?> _image = [null, null, null];
 
   late double screenHeight, screenWidth, cardwitdh, resWidth;
   //File? _image;
